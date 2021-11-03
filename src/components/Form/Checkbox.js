@@ -3,12 +3,12 @@
 // import styles from "./.module.css";
 // import logo from "";
 
-export default function Checkbox({ text, ...rest }) {
+export default function Checkbox({ className, text, ...rest }) {
     return (
         <>
             {/* className={styles.} /}
             {/ className={styles.} */}
-            <label>
+            <label className={className}>
                 <input type="checkbox" {...rest} />
                 <span> {text}</span>
             </label>
