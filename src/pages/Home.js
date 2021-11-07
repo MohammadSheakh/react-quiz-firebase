@@ -1,4 +1,4 @@
-import Videos from "../components/Videos/Videos.js";
+import Videos from "../components/Videos/Videos";
 // import  from "./";
 // import styles from "./.module.css";
 // import logo from "";

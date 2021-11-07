@@ -3,6 +3,7 @@
 import styles from "./Videos.module.css";
 
 import Video from "./Video"; // component
+import { Link } from "react-router-dom";
 
 export default function Videos() {
     return (
@@ -10,16 +11,30 @@ export default function Videos() {
             {/* className={styles.} /}
             {/ className={styles.} */}
             <div className={styles.videos}>
-                <Video />
-                <Video />
-                <Video />
-                <Video />
-                <Video />
-                <Video />
-                <Video />
-                <Video />
-                <Video />
-                <Video />
+                <Link to="/quiz">
+                    <Video />
+                </Link>
+                <Link to="/quiz">
+                    <Video />
+                </Link>
+                <Link to="/quiz">
+                    <Video />
+                </Link>
+                <Link to="/quiz">
+                    <Video />
+                </Link>
+                <Link to="/quiz">
+                    <Video />
+                </Link>
+                <Link to="/quiz">
+                    <Video />
+                </Link>
+                <Link to="/quiz">
+                    <Video />
+                </Link>
+                <Link to="/quiz">
+                    <Video />
+                </Link>
             </div>
         </>
     );

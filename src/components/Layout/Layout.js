@@ -1,6 +1,8 @@
 import Nav from "../Nav/Nav";
 
 import styles from "./Layout.module.css";
+// 👈
+// 👉 App.js
 export default function Layout({ children }) {
     return (
         <>

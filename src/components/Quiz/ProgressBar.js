@@ -2,6 +2,7 @@
 import Button from "../Form/Button";
 import styles from "./ProgressBar.module.css";
 // import logo from "";
+import { Link } from "react-router-dom";
 
 export default function ProgressBar() {
     return (
@@ -24,7 +25,7 @@ export default function ProgressBar() {
                         ></div>
                     </div>
                 </div>
-                <a href="result.html">
+                <Link to="/result">
                     <Button className={styles.next}>
                         <span>Next Question</span>
                         <span class="material-icons-outlined">
@@ -32,7 +33,7 @@ export default function ProgressBar() {
                             arrow_forward{" "}
                         </span>
                     </Button>
-                </a>
+                </Link>
             </div>
         </>
     );
