@@ -1,25 +1,21 @@
 // logged in state ta bujhar jonno amra current user ta dorkar hobe .. useAuth ta amar lagbe
 import { useAuth } from "../contexts/AuthContext";
-import {
-    Route,
-    useNavigate,
-    Navigate,
-    Redirect,
-    Routes,
-} from "react-router-dom";
+import { Route, Navigate, Routes } from "react-router-dom";
 
-export default function PrivateRoute({ element: Element, ...rest }) {
+export default function PrivateRoute(
+    /*{ element: Element, ...rest }*/ { children }
+) {
     // alias kore nilam .. element ke ekhon Element hishebeo access kora jabe ..
     const { currentUser } = useAuth(); // currentUser thakar manei hocche state ta logged in
-    const navigate = useNavigate();
 
     return currentUser ? (
-        <Routes>
-            <Route {...rest}>{(props) => <Element {...props} />}</Route>
-            <Route>
-                <Element></Element>
-            </Route>
-        </Routes>
+        // <Routes>
+        //     <Route {...rest}>{(props) => <Element {...props} />}</Route>
+        //     <Route>
+        //         <Element></Element>
+        //     </Route>
+        // </Routes>
+        children
     ) : (
         // <Element></Element>
         // render props pattern er moto..Child hishebe Component / Element ta dia dite pari

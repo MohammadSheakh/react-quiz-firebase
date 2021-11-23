@@ -21,16 +21,34 @@ function App() {
                     <Layout>
                         <Routes>
                             <Route exact="true" path="/" element={<Home />} />
-                            <PublicRoute
+                            {/* <PublicRoute
                                 exact="true"
                                 path="/signup"
                                 element={<Signup />}
-                            />
-                            <PublicRoute
+                            /> */}
+                            <Route
+                                exact="true"
+                                path="/signup"
+                                element={
+                                    <PublicRoute>
+                                        <Signup />
+                                    </PublicRoute>
+                                }
+                            >
+                                {/* <Route element={<Result />}></Route> */}
+                            </Route>
+
+                            <Route
                                 exact="true"
                                 path="/login"
-                                element={<LoginForm />}
-                            />
+                                element={
+                                    <PublicRoute>
+                                        <LoginForm />
+                                    </PublicRoute>
+                                }
+                            >
+                                {/* <Route element={<Result />}></Route> */}
+                            </Route>
 
                             {/*                             
                             Quiz route o Result Route .. egula kintu amader public route na 
@@ -67,8 +85,9 @@ function App() {
 
                             <Route
                                 exact="true"
-                                path="/quiz"
+                                path="/quiz/:id"
                                 element={
+                                    // to={`/quiz/${video.youtubeID}`} videos.js theke evabe pathano hobe
                                     <PrivateRoute>
                                         <Quiz></Quiz>
                                     </PrivateRoute>
