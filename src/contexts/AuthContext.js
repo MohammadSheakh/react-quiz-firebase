@@ -89,9 +89,11 @@ export function AuthProvider({ children }) {
         // update korchi
 
         // ekhon amader state ta ke amader update korte hobe ..
+        // local state ta te update korte hobe ..
         const user = auth.currentUser; // updated user ta niye ashlam ..
         setCurrentUser({
             ...user, // erokom kore korte hoy .. nahole 🔴immutably jinish ta hoy na ..
+            // eta jehetu ekta object .. tai evabe kajta korte hobe ..
         });
     }
 

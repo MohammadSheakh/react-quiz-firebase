@@ -8,7 +8,9 @@ export default function Button({ className, children }) {
         <>
             {/* className={styles.} /}
             {/ className={styles.} */}
-            <div className={`${styles.button} ${className}`}>{children}</div>
+            <button className={`${styles.button} ${className}`}>
+                {children}
+            </button>
         </>
     );
 }

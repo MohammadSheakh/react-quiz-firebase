@@ -1,6 +1,6 @@
 import { useState } from "react";
-// import { Link, useHistory } from "react-router-dom";
-// import { useAuth } from "../contexts/AuthContext";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext.js";
 import Button from "../components/Form/Button";
 import Form from "../components/Form/Form";
 import TextInput from "../components/Form/TextInput";
@@ -13,8 +13,9 @@ export default function LoginForm() {
     const [error, setError] = useState();
     const [loading, setLoading] = useState();
 
-    // const { login } = useAuth();
-    // const history = useHistory();
+    const { login } = useAuth();
+    const navigate = useNavigate(); // login korar pore amake dashboard e jete hobe ..
+    // ejonno amader navigate ta lagbe ..
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -22,8 +23,8 @@ export default function LoginForm() {
         try {
             setError("");
             setLoading(true);
-            // await login(email, password);
-            // history.push("/");
+            await login(email, password);
+            navigate("/");
         } catch (err) {
             console.log(err);
             setLoading(false);
@@ -61,11 +62,11 @@ export default function LoginForm() {
                     </Button>
 
                     {error && <p className="error">{error}</p>}
-                    <div className="info">dsds</div>
 
-                    {/* <div className="info">
-                Don't have an account? <Link to="/signup">Signup</Link> instead.
-            </div> */}
+                    <div className="info">
+                        Don't have an account? <Link to="/signup">Signup</Link>{" "}
+                        instead.
+                    </div>
                 </Form>
             </div>
         </>
