@@ -9,6 +9,9 @@ import ProgressBar from "./ProgressBar";
 import styles from "./Quiz.module.css";
 import _ from "lodash";
 // import logo from "";
+import { useAuth } from "../../contexts/AuthContext";
+import { getDatabase, ref, set } from "@firebase/database";
+import { useNavigate } from "react-router-dom";
 
 const initialState = null;
 
@@ -60,6 +63,7 @@ export default function Quiz() {
     const { id } = useParams();
     const { loading, error, questions } = useQuestions(id);
     const [currentQuestion, setCurrentQuestion] = useState(0);
+    const { currentUser } = useAuth();
 
     // database er jinish gula ke manupulate korar jonno amader local state e .. shetar ekta copy
     // baniye nilam ..
@@ -73,6 +77,9 @@ export default function Quiz() {
     // useReducer jehetu use korbo .. tahole ekhane ekta dispatch function pabo ..
     // useReducer er moddhe reducer nam e ekta function dite hoy .. initial state tao diye dite hoy ..
     const [qna, dispatch] = useReducer(reducer, initialState);
+
+    const navigate = useNavigate(); // login korar pore amake dashboard e jete hobe ..
+    // ejonno amader navigate ta lagbe .. // kotha change hobe ekhane ..
 
     useEffect(() => {
         dispatch({
@@ -95,8 +102,74 @@ export default function Quiz() {
         });
     }
 
-    console.log("😂", qna);
-    console.log("😀", questions);
+    // handle when user clicks the next button to get the next question
+    // ekhane amader ke current question ta update kore felte hobe ..
+    function nextQuestion(e, index) {
+        if (currentQuestion + 1 < questions.length) {
+            setCurrentQuestion(
+                (prevCurrentQuestion) => prevCurrentQuestion + 1
+            );
+        }
+    }
+
+    function prevQuestion(e, index) {
+        if (currentQuestion > 1 && currentQuestion <= questions.length) {
+            setCurrentQuestion(
+                (prevCurrentQuestion) => prevCurrentQuestion - 1
+            );
+        }
+    }
+
+    // calculate percentage of progress
+    const percentage =
+        questions.length > 0
+            ? ((currentQuestion + 1) / questions.length) * 100
+            : 0;
+
+    // submit quiz.. result ta database e save korar jonno .. firebase ke request korbe..
+    /**
+     * firebase er database e result nam e notun ekta node banabo .. and shei node er moddhe
+     * user er jei ID .. mane firebase user er jei ekta id set kore .. sheta ..
+     * mane hocche result namok node er moddhe current user er id er against e .. amra user er answer
+     * gula ke save kore felbo .. user er shob kichu kintu amader kase ase .. useReducer use korar pore
+     * amra je ekta state er copy baniyechilam .. shetai kintu amader checked state shoho .. user jei
+     * jei answer gula select koreche .. shegula tar moddhe ase ..
+     */
+    async function submitQuiz() {
+        // firebase e jehetu request korbo .. tai eta async function hobe ...
+        // currentUser er theke user ID ta ber kore niye ashbo .
+        const { uid } = currentUser;
+        const db = getDatabase(); // user er answer gula ke submit korte chaile db reference lagbe
+        const resultRef = ref(db, `result/${uid}`); // result node er jonno reference create korlam..
+        // bolte hoy amake .. ami kon node e hit korbo .. mane kon node e data save korbo ..
+        await set(resultRef, {
+            // data read er shomoy get niyechilam.. write er shomoy set nite hobe ..
+            // first parameter -> kon node e data update korbo , 2nd -> ki data update korbo ..
+            [id]: qna, // id number node e amra save korbo .. id kintu property name .. tai [id] evabe likhte hoy
+            // id er value ta ashole jeta .. sheta property name hishebe set hobe ..
+            // ultimately kahini hoilo .. result node -> user id -> video id -> all question with checked  answer
+        });
+        // ekhon last kaj hocche submit jehetu .. tai porer page e niye jaowa .. mane result page ..
+
+        // tai amra ekhane navigate use korte pari ...
+        navigate({
+            // URL er shathe .. ek e shathe . tar state tao pathiye dibo ..
+            // karon jokhon amra result page e jabo .. tokhon kintu amader question ar tar
+            // answer gula lagbe .. shegula shudhu shudhu database theke niye eshe to lav nai
+            // jehetu amader kachei ase .. tai ekhan thekei pathiye dibo state ta ..
+            // user er answer gula firebase theke niye ashleo question gula kintu dekhate hobe .
+            // karon question analysis dekhate hobe .. shegula qna er moddhe anai ase .. ei state e
+
+            // state jehetu pathate hobe .. tai shorashori link na pathiye amra ekta object pathaite pari
+            pathname: `/result/${id}`, // video id o pathailam .. karon kon video er shob result dekhabe sheta jante hobe
+            state: {
+                qna,
+            },
+        });
+    }
+
+    // console.log("😂", qna);
+    // console.log("😀", questions);
 
     return (
         <>
@@ -113,7 +186,12 @@ export default function Quiz() {
                         options={qna[currentQuestion].options}
                         handleChange={handleAnswerChange}
                     ></Answers>
-                    <ProgressBar></ProgressBar>
+                    <ProgressBar
+                        next={nextQuestion}
+                        prev={prevQuestion}
+                        progress={percentage}
+                        submit={submitQuiz}
+                    ></ProgressBar>
                     <MiniPlayer></MiniPlayer>
                 </div>
             )}

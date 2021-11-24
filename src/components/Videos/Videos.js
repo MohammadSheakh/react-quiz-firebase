@@ -60,6 +60,7 @@ export default function Videos() {
                                     title={video.title}
                                     id={video.youtubeID}
                                     noq={video.noq}
+                                    key={video.youtubeID}
                                 />
                             )
                         )}
