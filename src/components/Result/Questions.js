@@ -4,7 +4,7 @@ import Answers from "../Quiz/Answers";
 import styles from "./Question.module.css";
 // import image1 from "";
 
-export default function Question() {
+export default function Questions() {
     return (
         <>
             {/* className={ ${styles. } ${styles. }} 

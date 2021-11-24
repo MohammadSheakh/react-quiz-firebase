@@ -3,7 +3,7 @@
 import styles from "./Summery.module.css";
 import image1 from "../../assets/images/success.png";
 
-export default function Summary() {
+export default function Summary({ score, noq }) {
     return (
         <>
             {/* className={ `${styles. } ${styles. }`} 
@@ -12,7 +12,8 @@ export default function Summary() {
                 <div className={styles.point}>
                     {/* <!-- progress bar will be placed here --> */}
                     <p className={styles.score}>
-                        Your score is <br />5 out of 10
+                        Your score is <br />
+                        {score} out of {noq * 5}
                     </p>
                 </div>
 
