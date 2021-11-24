@@ -97,7 +97,8 @@ function App() {
                             </Route>
                             <Route
                                 exact="true"
-                                path="/result"
+                                path="/result/:id"
+                                // pathname: `/result/${id}` from Quiz > Quiz.js > submitQuiz()
                                 element={
                                     <PrivateRoute>
                                         <Result></Result>
