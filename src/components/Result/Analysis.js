@@ -1,6 +1,6 @@
 // import  from "./";
 import styles from "./Analysis.module.css";
-import Questions from "./Question";
+import Questions from "./Questions";
 // import image1 from "";
 
 export default function Analysis({ answers }) {
@@ -11,7 +11,7 @@ export default function Analysis({ answers }) {
             <div className={styles.analysis}>
                 <h1>Question Analysis</h1>
 
-                <Questions></Questions>
+                <Questions answers={answers}></Questions>
             </div>
         </>
     );
