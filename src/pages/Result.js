@@ -34,10 +34,9 @@ export default function Result() {
             let correctIndexes = [];
             let checkIndexes = [];
             question.options.forEach((option, index2) => {
-                if (option.correct) {
-                    correctIndexes.push(index2); // shei option gular index niyei ami array ta
-                    // banate chai ..
-                }
+                if (option.correct) correctIndexes.push(index2); // shei option gular index niyei ami array ta
+                // banate chai ..
+
                 if (qna[index1].options[index2].checked) {
                     checkIndexes.push(index2); // shei option gular index niyei ami array ta
                     // banate chai ..
